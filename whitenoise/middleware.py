@@ -45,7 +45,7 @@ class WhiteNoiseMiddleware(MiddlewareMixin, WhiteNoise):
         self.get_response = get_response
         self.configure_from_settings(settings)
         # Pass None for `application`
-        super(WhiteNoiseMiddleware, self).__init__(None)
+        super(WhiteNoiseMiddleware, self).__init__(*args, **kwargs)
         if self.static_root:
             self.add_files(self.static_root, prefix=self.static_prefix)
         if self.root:
