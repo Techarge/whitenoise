@@ -50,7 +50,7 @@ class WhiteNoise(object):
     # Name of index file (None to disable index support)
     index_file = None
 
-    def __init__(self, application, root=None, prefix=None, **kwargs):
+    def __init__(self, application=None, root=None, prefix=None, **kwargs):
         for attr in self.config_attrs:
             try:
                 value = kwargs.pop(attr)
