@@ -10,7 +10,7 @@ from django.urls import get_script_prefix
 
 from .base import WhiteNoise
 from .string_utils import decode_if_byte_string, ensure_leading_trailing_slash
-
+from django.utils.deprecation import MiddlewareMixin
 
 __all__ = ["WhiteNoiseMiddleware"]
 
@@ -27,7 +27,7 @@ class WhiteNoiseFileResponse(FileResponse):
         pass
 
 
-class WhiteNoiseMiddleware(WhiteNoise):
+class WhiteNoiseMiddleware(MiddlewareMixin, WhiteNoise):
     """
     Wrap WhiteNoise to allow it to function as Django middleware, rather
     than WSGI middleware
@@ -52,12 +52,6 @@ class WhiteNoiseMiddleware(WhiteNoise):
             self.add_files(self.root)
         if self.use_finders and not self.autorefresh:
             self.add_files_from_finders()
-
-    def __call__(self, request):
-        response = self.process_request(request)
-        if response is None:
-            response = self.get_response(request)
-        return response
 
     def process_request(self, request):
         if self.autorefresh:
